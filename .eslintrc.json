@@ -1,0 +1,29 @@
+{
+  "env": {
+    "commonjs": true,
+    "es2021": true,
+    "node": true,
+    "jest/globals": true
+  },
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:prettier/recommended"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaVersion": "latest"
+  },
+  "plugins": [
+    "@typescript-eslint",
+    "jest",
+    "no-only-tests"
+  ],
+  "rules": {
+    "no-only-tests/no-only-tests": "error",
+    "semi": [
+      2,
+      "never"
+    ]
+  }
+}
