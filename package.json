@@ -2,7 +2,7 @@
   "name": "command-line-reader",
   "version": "1.0.0",
   "description": "To build and read command-line arguments in JavaScript",
-  "main": "src/index.ts",
+  "main": "lib/CommandLineReader.js",
   "files": [
     "lib/**/*"
   ],

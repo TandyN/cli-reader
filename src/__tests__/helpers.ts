@@ -32,5 +32,7 @@ describe('isArgument', () => {
     expect(isArgument('--a-b-c')).toBe(true)
     expect(isArgument('--aa-bb-cc-dd-ee-ff-gg')).toBe(true)
     expect(isArgument('--aa-bb-')).toBe(false)
+    expect(isArgument('--aa--bb')).toBe(false)
+    expect(isArgument('--aa-bb--c')).toBe(false)
   })
 })
