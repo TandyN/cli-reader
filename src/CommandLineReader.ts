@@ -31,8 +31,10 @@ class CommandLineReader {
     shorthandDefinitions = {},
     processArgvArguments,
   }: CommandLineReaderConstructor) {
-    let allInputArguments = processArgvArguments.slice(2)
     this.#firstArgumentPath = null
+    this.#shorthandDefinitions = shorthandDefinitions
+
+    let allInputArguments = processArgvArguments.slice(2)
 
     if (
       !isShorthandArgument(allInputArguments[0]) &&
@@ -47,8 +49,25 @@ class CommandLineReader {
       allInputArguments = processArgvArguments.slice(3)
     }
 
+    for (const key in this.#shorthandDefinitions) {
+      if (!isShorthandArgument(key)) {
+        throw new Error(
+          `Invalid shorthand of ${key}. Shorthand must begin with '-' and end with a lowercase letter.\n(examples: '-a', '-b', '-c')`,
+        )
+      }
+
+      const definedArgument = this.#shorthandDefinitions[key]
+
+      if (!argumentFunctions[definedArgument]) {
+        throw new Error(
+          `Shorthand '${key}' with definition '${
+            this.#shorthandDefinitions[key]
+          }' does not exist in argument functions`,
+        )
+      }
+    }
+
     this.#argumentFunctions = argumentFunctions
-    this.#shorthandDefinitions = shorthandDefinitions
     this.#providedArguments = {}
   }
 
