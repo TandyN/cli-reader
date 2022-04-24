@@ -1,26 +1,26 @@
 {
-  "name": "cli-reader-js",
+  "name": "command-line-reader",
   "version": "1.0.0",
   "description": "To build and read command-line arguments in JavaScript",
-  "main": "index.js",
+  "main": "src/index.ts",
   "files": [
     "lib/**/*"
   ],
   "scripts": {
     "build": "tsc",
     "lint": "eslint . --ext .ts",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "npx jest ."
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/TandyN/cli-reader-js.git"
+    "url": "git+https://github.com/TandyN/command-line-reader.git"
   },
   "author": "Tandy Nguyen",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/TandyN/cli-reader-js/issues"
+    "url": "https://github.com/TandyN/command-line-reader/issues"
   },
-  "homepage": "https://github.com/TandyN/cli-reader-js#readme",
+  "homepage": "https://github.com/TandyN/command-line-reader#readme",
   "devDependencies": {
     "@types/jest": "^27.4.1",
     "@typescript-eslint/eslint-plugin": "^5.20.0",
