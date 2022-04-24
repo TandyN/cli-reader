@@ -1,6 +1,6 @@
 const isShorthandArgument = (argument: string): boolean => {
   /**
-   * Argument must start with 1 '-' chharacter followed by
+   * Argument must start with 1 '-' character followed by
    * a single lowercase letter
    *
    * example: '-a', '-b', '-c'
@@ -12,9 +12,9 @@ const isShorthandArgument = (argument: string): boolean => {
 
 const isArgument = (argument: string): boolean => {
   /**
-   * Must start with '--' and end with a letter
+   * Argument must start with '--' and end with a lowercase letter
    * and optionally after that letter, continue with 1 '-' character
-   * followed by letters (can be reapeated and end with letters)
+   * followed by letters (can be reapeated and must end with a lowercase letter)
    *
    * example: '--abc', '--abc-def', '--abc-def-ghi.....'
    */
