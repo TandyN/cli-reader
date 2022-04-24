@@ -80,7 +80,7 @@ describe('CommandLineReader', () => {
         },
       })
     }).toThrowErrorMatchingInlineSnapshot(
-      `"Shorthand '-f' with definition '--fake' does not exist in argument functions"`,
+      `"Shorthand '-f' with definition '--fake' does not exist in argumentFunctions"`,
     )
   })
 
@@ -99,7 +99,7 @@ describe('CommandLineReader', () => {
         },
       })
     }).toThrowErrorMatchingInlineSnapshot(`
-      "Invalid shorthand of -aa. Shorthand must begin with '-' and end with a lowercase letter.
+      "Invalid shorthand of '-aa' in shorthandDefinitions. Shorthand must begin with '-' and end with a lowercase letter.
       (examples: '-a', '-b', '-c')"
     `)
   })
