@@ -1,4 +1,8 @@
-import { isShorthandArgument, isArgument } from '../helpers'
+import {
+  isShorthandArgument,
+  isArgument,
+  createDefaultArgumentFunctions,
+} from '../helpers'
 
 describe('isShorthandArgument', () => {
   it("should only be 2 characters, start with a '-' character, and end with a lowercase letter ", () => {
@@ -34,5 +38,25 @@ describe('isArgument', () => {
     expect(isArgument('--aa-bb-')).toBe(false)
     expect(isArgument('--aa--bb')).toBe(false)
     expect(isArgument('--aa-bb--c')).toBe(false)
+  })
+})
+
+describe('createDefaultArgumentFunctions', () => {
+  it('should provide default functions to each argument', () => {
+    const createdArgumentFunctions = createDefaultArgumentFunctions([
+      '--arg-one',
+      '--arg-two',
+    ])
+
+    expect(createdArgumentFunctions).toMatchObject({
+      '--arg-one': expect.any(Function),
+      '--arg-two': expect.any(Function),
+    })
+
+    // should return argument entered
+    expect(createdArgumentFunctions['--arg-one']('abc')).toBe('abc')
+    expect(createdArgumentFunctions['--arg-one'](['abc', 'def'])).toMatchObject(
+      ['abc', 'def'],
+    )
   })
 })

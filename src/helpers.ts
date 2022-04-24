@@ -28,12 +28,11 @@ const isArgument = (argument: string): boolean => {
 const createDefaultArgumentFunctions = (
   argumentList: Array<string>,
 ): ArgumentFunction => {
-  const defaultFunction = (arg: Array<string> | string) => arg
   const argumentFunction: ArgumentFunction = {}
 
   argumentList.forEach((argument) => {
     if (!argumentFunction[argument]) {
-      argumentFunction[argument] = defaultFunction
+      argumentFunction[argument] = (arg: Array<string> | string) => arg
     }
   })
 

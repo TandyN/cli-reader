@@ -1,6 +1,9 @@
 import { CommandLineReader } from '../CommandLineReader'
 
 describe('CommandLineReader', () => {
+  /**
+   * firstArgumentPath tests
+   */
   it('should set firstArgumentPath to null if the first argument is an argument or a path if the path/file exists', () => {
     const processArgv = ['node path', 'file path', './package.json']
 
@@ -57,6 +60,9 @@ describe('CommandLineReader', () => {
     expect(commandLineReader.getFirstArgumentPath()).toBe(null)
   })
 
+  /**
+   * shorthandDefinitions tests
+   */
   it('should throw an error if shorthandDefinitions does not exist as an argument', () => {
     const processArgv = ['node path', 'file path', './package.json']
 
@@ -88,5 +94,45 @@ describe('CommandLineReader', () => {
       "Invalid shorthand of '-aa' in shorthandDefinitions. Shorthand must begin with '-' and end with a lowercase letter.
       (examples: '-a', '-b', '-c')"
     `)
+  })
+
+  it('should not require shorthandDefinitions', () => {
+    const processArgv = ['node path', 'file path', './package.json']
+
+    expect(() => {
+      new CommandLineReader({
+        processArgvArguments: processArgv,
+        argumentList: ['--argument'],
+      })
+    }).not.toThrowError()
+  })
+
+  /**
+   * argumentFunctions
+   */
+  it('should throw error if argument has incorrect format', () => {
+    const processArgv = ['node path', 'file path', './package.json']
+
+    expect(() => {
+      new CommandLineReader({
+        processArgvArguments: processArgv,
+        argumentList: ['-argument'],
+      })
+    }).toThrowErrorMatchingInlineSnapshot(`
+      "Invalid argument of '-argument' in argumentList. Argument must begin with '--' and end with a lowercase letters.
+      Optionally it can precede with single '-' characters followed by lowercase letters.
+      (examples: '--testing', '--test-argument', '--test-argument-two', ...)"
+    `)
+  })
+
+  it('should allow multiple valid arguments in list', () => {
+    const processArgv = ['node path', 'file path', './package.json']
+
+    expect(() => {
+      new CommandLineReader({
+        processArgvArguments: processArgv,
+        argumentList: ['--argument-one', '--argument-two', '--argument-three'],
+      })
+    }).not.toThrowError()
   })
 })

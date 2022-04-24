@@ -47,7 +47,7 @@ class CommandLineReader {
     for (const key in this.#argumentFunctions) {
       if (!isArgument(key)) {
         throw new Error(
-          `Invalid argument of '${key}' in argumentFunctions. Argument must begin with '--' and end with a lowercase letters.\nOptionally it can precede with single '-' characters followed by lowercase letters.\n(examples: '--testing', '--test-argument', '--test-argument-two', ...)`,
+          `Invalid argument of '${key}' in argumentList. Argument must begin with '--' and end with a lowercase letters.\nOptionally it can precede with single '-' characters followed by lowercase letters.\n(examples: '--testing', '--test-argument', '--test-argument-two', ...)`,
         )
       }
     }
