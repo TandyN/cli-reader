@@ -24,11 +24,7 @@ class CommandLineReader {
     shorthandDefinitions = {},
     processArgvArguments,
   }: CommandLineReaderConstructor) {
-    if (Array.isArray(argumentList)) {
-      argumentList = createDefaultArgumentFunctions(argumentList)
-    }
-
-    this.#argumentFunctions = argumentList
+    this.#argumentFunctions = createDefaultArgumentFunctions(argumentList)
     this.#shorthandDefinitions = shorthandDefinitions
     this.#providedArguments = {}
     this.#firstArgumentPath = null

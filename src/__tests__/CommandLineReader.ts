@@ -6,9 +6,7 @@ describe('CommandLineReader', () => {
 
     const commandLineReader = new CommandLineReader({
       processArgvArguments: processArgv,
-      argumentList: {
-        '--argument': (arg) => arg,
-      },
+      argumentList: ['--argument'],
       shorthandDefinitions: {
         '-a': '--argument',
       },
@@ -23,9 +21,7 @@ describe('CommandLineReader', () => {
     expect(() => {
       new CommandLineReader({
         processArgvArguments: processArgv,
-        argumentList: {
-          '--argument': (arg) => arg,
-        },
+        argumentList: ['--argument'],
         shorthandDefinitions: {
           '-a': '--argument',
         },
@@ -40,9 +36,7 @@ describe('CommandLineReader', () => {
 
     let commandLineReader = new CommandLineReader({
       processArgvArguments: processArgv,
-      argumentList: {
-        '--argument': (arg) => arg,
-      },
+      argumentList: ['--argument'],
       shorthandDefinitions: {
         '-a': '--argument',
       },
@@ -54,9 +48,7 @@ describe('CommandLineReader', () => {
 
     commandLineReader = new CommandLineReader({
       processArgvArguments: processArgv,
-      argumentList: {
-        '--argument': (arg) => arg,
-      },
+      argumentList: ['--argument'],
       shorthandDefinitions: {
         '-a': '--argument',
       },
@@ -71,10 +63,7 @@ describe('CommandLineReader', () => {
     expect(() => {
       new CommandLineReader({
         processArgvArguments: processArgv,
-        argumentList: {
-          '--argument': (arg) => arg,
-        },
-
+        argumentList: ['--argument'],
         shorthandDefinitions: {
           '-f': '--fake',
         },
@@ -90,10 +79,7 @@ describe('CommandLineReader', () => {
     expect(() => {
       new CommandLineReader({
         processArgvArguments: processArgv,
-        argumentList: {
-          '--argument': (arg) => arg,
-        },
-
+        argumentList: ['--argument'],
         shorthandDefinitions: {
           '-aa': '--argument',
         },
