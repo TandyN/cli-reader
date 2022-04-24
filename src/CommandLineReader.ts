@@ -1,24 +1,17 @@
 import { existsSync as fsExistSync } from 'fs'
 
-import { isShorthandArgument, isArgument } from './helpers'
+import {
+  isShorthandArgument,
+  isArgument,
+  createDefaultArgumentFunctions,
+} from './helpers'
 
-interface ArgumentFunction {
-  [key: string]: (argument: Array<string>) => unknown
-}
-
-interface ProvidedArgument {
-  [key: string]: Array<string>
-}
-
-interface ShorthandDefinition {
-  [key: string]: string
-}
-
-interface CommandLineReaderConstructor {
-  argumentFunctions: ArgumentFunction
-  shorthandDefinitions?: ShorthandDefinition
-  processArgvArguments: Array<string>
-}
+import {
+  ArgumentFunction,
+  ProvidedArgument,
+  ShorthandDefinition,
+  CommandLineReaderConstructor,
+} from './ts_interfaces'
 
 class CommandLineReader {
   #argumentFunctions: ArgumentFunction
@@ -27,11 +20,15 @@ class CommandLineReader {
   #firstArgumentPath: string | null
 
   constructor({
-    argumentFunctions,
+    argumentList,
     shorthandDefinitions = {},
     processArgvArguments,
   }: CommandLineReaderConstructor) {
-    this.#argumentFunctions = argumentFunctions
+    if (Array.isArray(argumentList)) {
+      argumentList = createDefaultArgumentFunctions(argumentList)
+    }
+
+    this.#argumentFunctions = argumentList
     this.#shorthandDefinitions = shorthandDefinitions
     this.#providedArguments = {}
     this.#firstArgumentPath = null

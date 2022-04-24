@@ -1,3 +1,5 @@
+import { ArgumentFunction } from './ts_interfaces'
+
 const isShorthandArgument = (argument: string): boolean => {
   /**
    * Argument must start with 1 '-' character followed by
@@ -23,4 +25,19 @@ const isArgument = (argument: string): boolean => {
   return argument.match(argumentRegex) ? true : false
 }
 
-export { isShorthandArgument, isArgument }
+const createDefaultArgumentFunctions = (
+  argumentList: Array<string>,
+): ArgumentFunction => {
+  const defaultFunction = (arg: Array<string> | string) => arg
+  const argumentFunction: ArgumentFunction = {}
+
+  argumentList.forEach((argument) => {
+    if (!argumentFunction[argument]) {
+      argumentFunction[argument] = defaultFunction
+    }
+  })
+
+  return argumentFunction
+}
+
+export { isShorthandArgument, isArgument, createDefaultArgumentFunctions }
