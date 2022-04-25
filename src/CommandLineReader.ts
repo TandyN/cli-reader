@@ -22,7 +22,7 @@ class CommandLineReader {
   constructor({
     argumentList,
     shorthandDefinitions = {},
-    processArgvArguments,
+    processArgvArguments = process.argv,
   }: CommandLineReaderConstructor) {
     this.#argumentFunctions = createDefaultArgumentFunctions(argumentList)
     this.#shorthandDefinitions = shorthandDefinitions
