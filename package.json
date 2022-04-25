@@ -1,5 +1,5 @@
 {
-  "name": "command-line-reader",
+  "name": "command-line-reader-js",
   "version": "1.0.0",
   "description": "To build and read command-line arguments in JavaScript",
   "main": "lib/CommandLineReader.js",
@@ -13,14 +13,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/TandyN/command-line-reader.git"
+    "url": "git+https://github.com/TandyN/command-line-reader-js.git"
   },
   "author": "Tandy Nguyen",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/TandyN/command-line-reader/issues"
+    "url": "https://github.com/TandyN/command-line-reader-js/issues"
   },
-  "homepage": "https://github.com/TandyN/command-line-reader#readme",
+  "homepage": "https://github.com/TandyN/command-line-reader-js#readme",
   "devDependencies": {
     "@types/jest": "^27.4.1",
     "@types/node": "^17.0.25",
