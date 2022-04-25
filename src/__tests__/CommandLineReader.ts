@@ -265,6 +265,17 @@ describe('CommandLineReader', () => {
     })
   })
 
+  it('should return null when argument exists in the argumentList but no arguments were passed through', () => {
+    const processArgv = ['node path', 'file path']
+
+    const commandLineReader = new CommandLineReader({
+      processArgvArguments: processArgv,
+      argumentList: ['--argument'],
+    })
+
+    expect(commandLineReader.getArgumentValues('--argument')).toBe(null)
+  })
+
   /**
    * setArgumentFunction
    */
