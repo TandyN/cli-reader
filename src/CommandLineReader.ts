@@ -130,6 +130,10 @@ class CommandLineReader {
     let storedArguments: Array<string> | string =
       this.#providedArguments[usedArg]
 
+    if (!storedArguments) {
+      return null
+    }
+
     if (storedArguments.length === 1) {
       storedArguments = storedArguments[0]
     }
