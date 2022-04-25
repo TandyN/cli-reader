@@ -216,4 +216,136 @@ describe('CommandLineReader', () => {
     expect(commandLineReader.getArgumentValues('abc')).toBe(null)
     expect(commandLineReader.getArgumentValues('-def')).toBe(null)
   })
+
+  it('should accept multiple arguments', () => {
+    const processArgv = [
+      'node path',
+      'file path',
+      '--arg-one',
+      'val1',
+      '--arg-two',
+      'val2',
+      '--arg-three',
+      'val3',
+      '--arg-three',
+      'val3',
+    ]
+
+    const commandLineReader = new CommandLineReader({
+      processArgvArguments: processArgv,
+      argumentList: ['--arg-one', '--arg-two', '--arg-three'],
+    })
+
+    expect(commandLineReader.getArgumentValues('--arg-one')).toBe('val1')
+    expect(commandLineReader.getArgumentValues('--arg-two')).toBe('val2')
+    expect(commandLineReader.getArgumentValues('--arg-three')).toMatchObject([
+      'val3',
+      'val3',
+    ])
+  })
+
+  it('should be able to set custom functions for arguments', () => {
+    const processArgv = [
+      'node path',
+      'file path',
+      '--arg-one',
+      'val1',
+      '--arg-two',
+      'val2',
+      '--arg-three',
+      'val3',
+      '--arg-three',
+      'val3',
+    ]
+
+    const commandLineReader = new CommandLineReader({
+      processArgvArguments: processArgv,
+      argumentList: ['--arg-one', '--arg-two', '--arg-three'],
+    })
+
+    const customArgOne = (val: Array<string> | string) => {
+      if (val === 'val1') return true
+      return false
+    }
+
+    const customArgTwo = (val: Array<string> | string) => {
+      if (val === 'val2') return true
+      return false
+    }
+
+    const customArgThree = (val: Array<string> | string) => {
+      if (val.length === 2) return true
+      return false
+    }
+
+    commandLineReader.setArgumentFunction('--arg-one', customArgOne)
+    commandLineReader.setArgumentFunction('--arg-two', customArgTwo)
+    commandLineReader.setArgumentFunction('--arg-three', customArgThree)
+
+    expect(commandLineReader.getArgumentValues('--arg-one')).toBe(true)
+    expect(commandLineReader.getArgumentValues('--arg-two')).toBe(true)
+    expect(commandLineReader.getArgumentValues('--arg-three')).toBe(true)
+  })
+
+  it('should be able to set custom functions with shorthand', () => {
+    const processArgv = ['node path', 'file path', '--arg-one', 'val1']
+
+    const commandLineReader = new CommandLineReader({
+      processArgvArguments: processArgv,
+      argumentList: ['--arg-one'],
+      shorthandDefinitions: {
+        '-a': '--arg-one',
+      },
+    })
+
+    const customArgOne = (val: Array<string> | string) => {
+      if (val === 'val1') return true
+      return false
+    }
+
+    commandLineReader.setArgumentFunction('-a', customArgOne)
+
+    expect(commandLineReader.getArgumentValues('-a')).toBe(true)
+    expect(commandLineReader.getArgumentValues('--arg-one')).toBe(true)
+  })
+
+  it('should throw an error when setting an unknown argument', () => {
+    const processArgv = ['node path', 'file path', '--arg-one', 'val1']
+
+    const commandLineReader = new CommandLineReader({
+      processArgvArguments: processArgv,
+      argumentList: ['--arg-one'],
+    })
+
+    const customArgOne = (val: Array<string> | string) => {
+      if (val === 'val1') return true
+      return false
+    }
+
+    expect(() => {
+      commandLineReader.setArgumentFunction('--fake', customArgOne)
+    }).toThrowErrorMatchingInlineSnapshot(
+      `"Unable to set function. Argument '--fake' does not exist."`,
+    )
+  })
+
+  it('should be able to throw errors inside custom function', () => {
+    const processArgv = ['node path', 'file path', '--arg-one', 'val1']
+
+    const commandLineReader = new CommandLineReader({
+      processArgvArguments: processArgv,
+      argumentList: ['--arg-one'],
+    })
+
+    const customArgOne = (val: Array<string> | string) => {
+      if (val === 'val1') throw new Error('test error')
+      return false
+    }
+
+    commandLineReader.setArgumentFunction('--arg-one', customArgOne)
+
+    expect(() => {
+      commandLineReader.getArgumentValues('--arg-one')
+    }).toThrowErrorMatchingInlineSnapshot(`"test error"`)
+  })
 })

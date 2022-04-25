@@ -136,6 +136,25 @@ class CommandLineReader {
   getFirstArgumentPath(): string | null {
     return this.#firstArgumentPath
   }
+
+  setArgumentFunction(
+    arg: string,
+    func: (arg: Array<string> | string) => unknown,
+  ): void {
+    let usedArg = arg
+
+    if (isShorthandArgument(arg)) {
+      usedArg = this.#shorthandDefinitions[arg]
+    }
+
+    if (!this.#argumentFunctions[usedArg]) {
+      throw new Error(
+        `Unable to set function. Argument '${arg}' does not exist.`,
+      )
+    }
+
+    this.#argumentFunctions[usedArg] = func
+  }
 }
 
 export { CommandLineReader }
