@@ -212,7 +212,7 @@ describe('CommandLineReader', () => {
       ])
     })
 
-    it("should return null if argument provided doesn't exist", () => {
+    it("should throw error if argument provided doesn't exist", () => {
       const processArgv = [
         'node path',
         'file path',
@@ -230,8 +230,11 @@ describe('CommandLineReader', () => {
         },
       })
 
-      expect(commandLineReader.getArgumentValues('abc')).toBe(null)
-      expect(commandLineReader.getArgumentValues('-def')).toBe(null)
+      expect(() => {
+        commandLineReader.getArgumentValues('abc')
+      }).toThrowErrorMatchingInlineSnapshot(
+        `"Cannot get argument abc. It does not exist in the argumentList"`,
+      )
     })
 
     it('should accept multiple arguments', () => {
