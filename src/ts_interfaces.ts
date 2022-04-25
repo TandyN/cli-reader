@@ -13,7 +13,7 @@ interface ShorthandDefinition {
 interface CommandLineReaderConstructor {
   argumentList: Array<string>
   shorthandDefinitions?: ShorthandDefinition
-  processArgvArguments: Array<string>
+  processArgvArguments?: Array<string>
 }
 
 export {

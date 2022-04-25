@@ -2,7 +2,6 @@
 const { CommandLineReader } = require('./lib/CommandLineReader')
 
 const commandLineReader = new CommandLineReader({
-  processArgvArguments: process.argv,
   argumentList: ['--arg'],
 })
 
