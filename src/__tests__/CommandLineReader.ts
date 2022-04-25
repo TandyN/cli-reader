@@ -135,4 +135,85 @@ describe('CommandLineReader', () => {
       })
     }).not.toThrowError()
   })
+
+  /**
+   * getArgumentValues
+   */
+  it('should return the string if argument only has 1 value', () => {
+    const processArgv = ['node path', 'file path', '--arg-one', 'val1']
+
+    const commandLineReader = new CommandLineReader({
+      processArgvArguments: processArgv,
+      argumentList: ['--arg-one'],
+    })
+
+    expect(commandLineReader.getArgumentValues('--arg-one')).toBe('val1')
+  })
+
+  it('should return array if the same argument has multiple values', () => {
+    const processArgv = [
+      'node path',
+      'file path',
+      '--arg-one',
+      'val1',
+      '--arg-one',
+      'val2',
+    ]
+
+    const commandLineReader = new CommandLineReader({
+      processArgvArguments: processArgv,
+      argumentList: ['--arg-one'],
+    })
+
+    expect(commandLineReader.getArgumentValues('--arg-one')).toMatchObject([
+      'val1',
+      'val2',
+    ])
+  })
+
+  it('should be able to use shorthand arguments to get values', () => {
+    const processArgv = [
+      'node path',
+      'file path',
+      '--arg-one',
+      'val1',
+      '--arg-one',
+      'val2',
+    ]
+
+    const commandLineReader = new CommandLineReader({
+      processArgvArguments: processArgv,
+      argumentList: ['--arg-one'],
+      shorthandDefinitions: {
+        '-a': '--arg-one',
+      },
+    })
+
+    expect(commandLineReader.getArgumentValues('-a')).toMatchObject([
+      'val1',
+      'val2',
+    ])
+  })
+
+  it("should return null if argument provided doesn't exist", () => {
+    const processArgv = [
+      'node path',
+      'file path',
+      '--arg-one',
+      'val1',
+      '--arg-one',
+      'val2',
+    ]
+
+    const commandLineReader = new CommandLineReader({
+      processArgvArguments: processArgv,
+      argumentList: ['--arg-one'],
+      shorthandDefinitions: {
+        '-a': '--arg-one',
+      },
+    })
+
+    expect(commandLineReader.getArgumentValues('abc')).toBe(null)
+    expect(commandLineReader.getArgumentValues('-def')).toBe(null)
+  })
 })

@@ -113,7 +113,24 @@ class CommandLineReader {
   }
 
   getArgumentValues(arg: string): unknown {
-    return this.#argumentFunctions[arg](this.#providedArguments[arg])
+    let usedArg = arg
+
+    if (isShorthandArgument(arg)) {
+      usedArg = this.#shorthandDefinitions[arg]
+    }
+
+    if (!this.#argumentFunctions[usedArg]) {
+      return null
+    }
+
+    let storedArguments: Array<string> | string =
+      this.#providedArguments[usedArg]
+
+    if (storedArguments.length === 1) {
+      storedArguments = storedArguments[0]
+    }
+
+    return this.#argumentFunctions[usedArg](storedArguments)
   }
 
   getFirstArgumentPath(): string | null {
