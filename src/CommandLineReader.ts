@@ -122,15 +122,13 @@ class CommandLineReader {
     }
 
     if (!this.#argumentFunctions[usedArg]) {
-      return null
+      throw new Error(
+        `Cannot get argument ${arg}. It does not exist in the argumentList`,
+      )
     }
 
     let storedArguments: Array<string> | string =
       this.#providedArguments[usedArg]
-
-    if (!storedArguments) {
-      return null
-    }
 
     if (storedArguments.length === 1) {
       storedArguments = storedArguments[0]
