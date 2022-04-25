@@ -31,17 +31,19 @@ class CommandLineReader {
 
     let allInputArguments: Array<string> = processArgvArguments.slice(2)
 
-    if (
-      !isShorthandArgument(allInputArguments[0]) &&
-      !isArgument(allInputArguments[0])
-    ) {
-      if (!fsExistSync(allInputArguments[0])) {
-        throw new Error(
-          `First argument assumed as path. Path '${allInputArguments[0]}' was not found`,
-        )
+    if (allInputArguments[0]) {
+      if (
+        !isShorthandArgument(allInputArguments[0]) &&
+        !isArgument(allInputArguments[0])
+      ) {
+        if (!fsExistSync(allInputArguments[0])) {
+          throw new Error(
+            `First argument assumed as path. Path '${allInputArguments[0]}' was not found`,
+          )
+        }
+        this.#firstArgumentPath = allInputArguments[0]
+        allInputArguments = processArgvArguments.slice(3)
       }
-      this.#firstArgumentPath = allInputArguments[0]
-      allInputArguments = processArgvArguments.slice(3)
     }
 
     for (const key in this.#argumentFunctions) {
@@ -65,7 +67,7 @@ class CommandLineReader {
         throw new Error(
           `Shorthand '${key}' with definition '${
             this.#shorthandDefinitions[key]
-          }' does not exist in argumentFunctions`,
+          }' does not exist in argumentList`,
         )
       }
     }
@@ -100,7 +102,7 @@ class CommandLineReader {
 
       if (!this.#argumentFunctions[argument]) {
         throw new Error(
-          `Invalid input argument of '${originalArgument}'. This argument does not exist in argumentFunctions`,
+          `Invalid input argument of '${originalArgument}'. This argument does not exist in argumentList`,
         )
       }
 
@@ -125,6 +127,10 @@ class CommandLineReader {
 
     let storedArguments: Array<string> | string =
       this.#providedArguments[usedArg]
+
+    if (!storedArguments) {
+      return null
+    }
 
     if (storedArguments.length === 1) {
       storedArguments = storedArguments[0]
