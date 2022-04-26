@@ -9,7 +9,7 @@
   "scripts": {
     "build": "tsc",
     "lint": "eslint . --ext .ts",
-    "test": "npx jest ."
+    "test": "npx jest . --coverage"
   },
   "repository": {
     "type": "git",

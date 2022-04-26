@@ -161,6 +161,18 @@ describe('CommandLineReader', () => {
     })
   })
 
+  it("should throw if entering a script argument that doesn't exist in argumentList", () => {
+    const processArgv = ['node path', 'file path', '--fake']
+    expect(() => {
+      new CommandLineReader({
+        processArgvArguments: processArgv,
+        argumentList: ['--arg'],
+      })
+    }).toThrowErrorMatchingInlineSnapshot(
+      `"Invalid input argument of '--fake'. This argument does not exist in argumentList"`,
+    )
+  })
+
   /**
    * getArgumentValues
    */
