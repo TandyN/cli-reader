@@ -2,12 +2,21 @@ import { CommandLineReader } from '../CommandLineReader'
 
 describe('CommandLineReader', () => {
   describe('Constructor', () => {
-    it('should be able to run with no arguments', () => {
+    it('should be able to run with no arguments passed to script', () => {
       const processArgv = ['node path', 'file path']
       expect(() => {
         new CommandLineReader({
           processArgvArguments: processArgv,
           argumentList: ['--argument'],
+        })
+      }).not.toThrowError()
+    })
+
+    it('should be able to run with no arguments', () => {
+      const processArgv = ['node path', 'file path']
+      expect(() => {
+        new CommandLineReader({
+          processArgvArguments: processArgv,
         })
       }).not.toThrowError()
     })
@@ -152,6 +161,18 @@ describe('CommandLineReader', () => {
     })
   })
 
+  it("should throw if entering a script argument that doesn't exist in argumentList", () => {
+    const processArgv = ['node path', 'file path', '--fake']
+    expect(() => {
+      new CommandLineReader({
+        processArgvArguments: processArgv,
+        argumentList: ['--arg'],
+      })
+    }).toThrowErrorMatchingInlineSnapshot(
+      `"Invalid input argument of '--fake'. This argument does not exist in argumentList"`,
+    )
+  })
+
   /**
    * getArgumentValues
    */
@@ -233,7 +254,7 @@ describe('CommandLineReader', () => {
       expect(() => {
         commandLineReader.getArgumentValues('abc')
       }).toThrowErrorMatchingInlineSnapshot(
-        `"Cannot get argument abc. It does not exist in the argumentList"`,
+        `"Cannot get argument 'abc'. It does not exist in the argumentList"`,
       )
     })
 

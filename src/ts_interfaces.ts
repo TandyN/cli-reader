@@ -11,7 +11,7 @@ interface ShorthandDefinition {
 }
 
 interface CommandLineReaderConstructor {
-  argumentList: Array<string>
+  argumentList?: Array<string>
   shorthandDefinitions?: ShorthandDefinition
   processArgvArguments?: Array<string>
 }

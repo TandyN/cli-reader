@@ -1,0 +1,35 @@
+name: tests
+
+on:
+  pull_request:
+    types: [ opened, synchronize ]
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set Up node
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+
+      - name: Modules Cache
+        uses: actions/cache@v2
+        id: modules-cache
+        with:
+          path: '**/node_modules'
+          key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
+
+      - name: Install Modules
+        if: steps.modules-cache.outputs.cache-hit != 'true'
+        run: yarn
+
+      - name: Run Tests
+        run: |
+          npm run lint
+          npm run test
+      
+      - name: Code Coverage
+        uses: codecov/codecov-action@v2
