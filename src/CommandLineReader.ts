@@ -13,6 +13,12 @@ import {
   CommandLineReaderConstructor,
 } from './ts_interfaces'
 
+const defaultConstructor = {
+  argumentList: [],
+  shorthandDefinitions: {},
+  processArgvArguments: process.argv,
+}
+
 class CommandLineReader {
   #argumentFunctions: ArgumentFunction
   #shorthandDefinitions: ShorthandDefinition
@@ -20,10 +26,10 @@ class CommandLineReader {
   #firstArgumentPath: string | null
 
   constructor({
-    argumentList,
+    argumentList = [],
     shorthandDefinitions = {},
     processArgvArguments = process.argv,
-  }: CommandLineReaderConstructor) {
+  }: CommandLineReaderConstructor = defaultConstructor) {
     this.#argumentFunctions = createDefaultArgumentFunctions(argumentList)
     this.#shorthandDefinitions = shorthandDefinitions
     this.#providedArguments = {}
@@ -123,7 +129,7 @@ class CommandLineReader {
 
     if (!this.#argumentFunctions[usedArg]) {
       throw new Error(
-        `Cannot get argument ${arg}. It does not exist in the argumentList`,
+        `Cannot get argument '${arg}'. It does not exist in the argumentList`,
       )
     }
 

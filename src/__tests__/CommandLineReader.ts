@@ -2,12 +2,21 @@ import { CommandLineReader } from '../CommandLineReader'
 
 describe('CommandLineReader', () => {
   describe('Constructor', () => {
-    it('should be able to run with no arguments', () => {
+    it('should be able to run with no arguments passed to script', () => {
       const processArgv = ['node path', 'file path']
       expect(() => {
         new CommandLineReader({
           processArgvArguments: processArgv,
           argumentList: ['--argument'],
+        })
+      }).not.toThrowError()
+    })
+
+    it('should be able to run with no arguments', () => {
+      const processArgv = ['node path', 'file path']
+      expect(() => {
+        new CommandLineReader({
+          processArgvArguments: processArgv,
         })
       }).not.toThrowError()
     })
@@ -233,7 +242,7 @@ describe('CommandLineReader', () => {
       expect(() => {
         commandLineReader.getArgumentValues('abc')
       }).toThrowErrorMatchingInlineSnapshot(
-        `"Cannot get argument abc. It does not exist in the argumentList"`,
+        `"Cannot get argument 'abc'. It does not exist in the argumentList"`,
       )
     })
 
