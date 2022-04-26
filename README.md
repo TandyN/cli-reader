@@ -1,4 +1,4 @@
-# command-line-reader-js
+# command-line-reader
 
 To parse command-line arguments in JavaScript.
 
@@ -15,21 +15,21 @@ This package allows you to define a list of arguments you wish to parse in your 
 
 1. Install the package
     ```
-    npm install command-line-reader-js
+    npm install command-line-reader
     ```
 2. Import the module into your JavaScript script
     ```
-    const { CommandLineReader } = require('command-line-reader-js')
+    const { CommandLineReader } = require('command-line-reader')
     ```
 ### Usage
 
 #### Basic:
-Below is an example usage of `command-line-reader-js`
+Below is an example usage of `command-line-reader`
 ```
 // node ./example.js --arg-one val1 --arg-two val2 --arg-two val3
 
 
-const { CommandLineReader } = require('command-line-reader-js')
+const { CommandLineReader } = require('command-line-reader')
 
 const commandLineReader = new CommandLineReader({
   argumentList: ['--arg-one', '--arg-two'],
@@ -47,7 +47,7 @@ You can add shorthand definitions that map to the full argument
 // node ./example.js -a val1 --arg-one val2
 
 
-const { CommandLineReader } = require('command-line-reader-js')
+const { CommandLineReader } = require('command-line-reader')
 
 const commandLineReader = new CommandLineReader({
   argumentList: ['--arg-one', '--arg-two'],
@@ -84,6 +84,10 @@ Example of correct formatting:
 -b
 -c
 ```
+## Dev Dependencies
+* TypeScript
+* Jest
+
 
 ## Contributing
 Feel free to contribute by submitting a pull request or opening an issue. You can also fork the project and do whatever you want with it.
